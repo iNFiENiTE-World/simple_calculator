@@ -2,7 +2,7 @@
 A calculator that can do basic mathematical operation.
 
 ### What can I do?
-You might want a **blazingly fast** and **easy-to-use** calculator to calculate the simplest thing, **2+2=?** Well, this calculator will definitely prove to be useful!
+You might want a **blazingly fast and easy-to-use** calculator to calculate the simplest thing, **2+2=?** Well, this calculator will definitely prove to be useful!
 
 ## Calculating
 ### Addition
