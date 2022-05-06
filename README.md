@@ -1,0 +1,2 @@
+# simple_calculator
+My first C++ program. I'm learning about Data Structures based on a book which uses C++ language as its implementation. I'm quite fluent in Javascript and has been learning and doing project with different programming languages, so using C++ feels comfortable and its syntax is like Java / C#. I will appreciate if you want to test my application! Let me know what you think and what I can improve
