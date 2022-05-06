@@ -1,5 +1,6 @@
 # include <iostream>
 # include <cmath>
+# define DELIMITER ','
 using namespace std;
 
 template <typename T>
@@ -38,10 +39,57 @@ class Stack {
 };
 
 class Calculator {
+    private: 
+        Stack<char> opers;
+
+        string standardExpression (string expression) {
+            string subExpression;
+
+            for (int i = 0; i < expression.length(); i++) {
+                char singleExpression = expression[i];
+
+                if (isOperator(singleExpression)) {
+                    opers.push(singleExpression);
+                    continue;
+                }
+
+                subExpression += singleExpression + DELIMITER;
+
+            }
+        }
+
+        int isOperator (char subexpression) {
+            switch (subexpression) {
+                case '+': return 1;
+                case '-': return 1;
+                case 'x': return 1;
+                case '/': return 1;
+                default: return 0;
+            }
+        }
+
+        int isPrecedence (char oper) {
+            return getPriority(oper) >= getPriority(opers.top());
+        }
+
+        int getPriority (char oper) {
+            int priority;
+            switch (oper) {
+                case '+': priority = 1; break;
+                case '-': priority = 1; break;
+                case 'x': priority = 2; break;
+                case '/': priority = 2; break;
+                default: return 0;
+            }
+            return priority;
+        }
+
     public:
         int calculate (string expression) {
 
         }
+
+        
 
     private:
         int lastAnswer;
