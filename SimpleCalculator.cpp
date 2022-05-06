@@ -2,22 +2,67 @@
 # include <cmath>
 using namespace std;
 
-// Math operators
-int add (int x, int y) {
-    return x + y;
-}
+template <typename T>
+class Stack {
+    private:
+        T* ptr;
+        struct Node {
+            T data;
+            Node* next;
+        };
 
-int subtract (int x, int y) {
-    return x - y;
-}
+        struct Node* stackTop = NULL;
 
-int multiply (int x, int y) {
-    return x * y;
-}
+        int isEmpty() {
+            return stackTop == NULL;
+        }
 
-int divide (int x, int y) {
-    return x / y;
-}
+    public:
+        void push (T item) {
+            struct Node* newNode = (struct Node*) malloc(sizeof(struct Node));
+            newNode -> data = item;
+            newNode -> next = stackTop;
+            stackTop = newNode;
+        }
+
+        T top () {
+            return stackTop -> data;
+        }
+
+        void pop () {
+            if (isEmpty()) {
+                return;
+            }
+            stackTop = stackTop -> next;
+        }
+};
+
+class Calculator {
+    public:
+        int calculate (string expression) {
+
+        }
+
+    private:
+        int lastAnswer;
+
+        int add (int x, int y) {
+            return x + y;
+        }
+
+        int subtract (int x, int y) {
+            return x - y;
+        }
+
+        int multiply (int x, int y) {
+            return x * y;
+        }
+
+        int divide (int x, int y) {
+            return x / y;
+        }
+
+};
 
 // Stack
 
@@ -26,47 +71,6 @@ int divide (int x, int y) {
 using namespace std;
 
 int myStack[SIZE], stackTop, answer = 0;
-
-void initStack () {
-    stackTop = -1;
-}
-
-int isEmptyStack () {
-    if (stackTop == -1) {
-        return 1;
-    }
-    else {
-        return 0;
-    }
-}
-
-int isFullStack () {
-    if (stackTop == SIZE - 1) {
-        return 1;
-    }
-    else {
-        return 0;
-    }
-}
-
-void push (int num) {
-    if (isFullStack()) {
-        return;
-    }
-
-    stackTop++;
-    myStack[stackTop] = num;
-}
-
-int pop () {
-    if (isEmptyStack()) {
-        return NAN;
-    }
-
-    int temp = myStack[stackTop];
-    stackTop--;
-    return temp;
-}
 
 void display () {    
     if (isEmptyStack()) {
