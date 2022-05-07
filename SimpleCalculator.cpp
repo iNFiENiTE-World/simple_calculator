@@ -14,10 +14,6 @@ class Stack {
 
         struct Node* stackTop = NULL;
 
-        int isEmpty() {
-            return stackTop == NULL;
-        }
-
     public:
         void push (T item) {
             struct Node* newNode = (struct Node*) malloc(sizeof(struct Node));
@@ -36,26 +32,61 @@ class Stack {
             }
             stackTop = stackTop -> next;
         }
+
+        int isEmpty() {
+            return stackTop == NULL;
+        }
 };
 
 class Calculator {
     private: 
+        enum state {
+            oper = 1,
+            number = 2
+        };
+
         Stack<char> opers;
 
-        string standardExpression (string expression) {
-            string subExpression;
+        string standardExpression (string postfixExpression) {
+            string infixExpression;
+            state currentState = number;
 
-            for (int i = 0; i < expression.length(); i++) {
-                char singleExpression = expression[i];
+            for (int i = 0; i < postfixExpression.length(); i++) {
+                char singleExpression = postfixExpression[i];
 
-                if (isOperator(singleExpression)) {
+                if (singleExpression == ' ') {
+                    continue;
+                }
+
+                if (!isOperator(singleExpression)) {
+                    if (currentState != number) {
+                        infixExpression += DELIMITER + singleExpression;
+                        currentState = number;
+                    }
+                    infixExpression += singleExpression;
+                    continue;
+                }
+
+                if (isPrecedence(singleExpression)) {
                     opers.push(singleExpression);
                     continue;
                 }
 
-                subExpression += singleExpression + DELIMITER;
+                do {
+                    singleExpression = opers.top();
+                    infixExpression += DELIMITER + singleExpression;
+                    opers.pop();
+                } while (isSimilarPrecedence(singleExpression));
 
+                currentState = oper;
             }
+
+            while (!opers.isEmpty()) {
+                infixExpression += opers.top();
+                opers.pop();
+            }
+
+            return infixExpression;
         }
 
         int isOperator (char subexpression) {
@@ -70,6 +101,10 @@ class Calculator {
 
         int isPrecedence (char oper) {
             return getPriority(oper) >= getPriority(opers.top());
+        }
+
+        int isSimilarPrecedence (char oper) {
+            return getPriority(oper) == getPriority(opers.top());
         }
 
         int getPriority (char oper) {
